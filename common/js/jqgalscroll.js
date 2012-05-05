@@ -77,9 +77,11 @@
 					width = el.opts.width;
 					height = el.totalChildren *el.opts.height;
 					break;
-				default:
+				case 'diagonal':
 					width = el.totalChildren *el.opts.width;
 					height = el.totalChildren *el.opts.height;
+					break;
+				default:
 					break;
 			};
 			
@@ -115,6 +117,12 @@
 						params = {right:(el.opts.width*href)}
 					};
 					
+					if( el.opts.direction == 'fade'){
+						el.jqthis.stop().fadeOut().animate(params,el.opts.speed, el.opts.ease).fadeIn();
+					}
+					else{
+						el.jqthis.stop().animate(params,el.opts.speed, el.opts.ease);
+					}
 					el.jqthis.stop().animate(params,el.opts.speed, el.opts.ease);
 					index = href;
 					return false;
@@ -130,11 +138,11 @@
 					pos.x = j * el.opts.width;
 					pos.y = j * el.opts.height;
 				}
-				else if( el.opts.direction == 'horizontal'){
-					pos.x = j * el.opts.width;
-				}
 				else if( el.opts.direction == 'vertical'){
 					pos.y = j * el.opts.height;
+				}
+				else{
+					pos.x = j * el.opts.width;
 				};
 
 				var jqchild = $(this).css({height:el.opts.height,width:el.opts.width,position:'absolute',left:pos.x, top:pos.y});
